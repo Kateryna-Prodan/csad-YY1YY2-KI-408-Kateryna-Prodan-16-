@@ -1,0 +1,21 @@
+Як створити файл “CMakeLists.txt”?
+
+
+Потрібно створити файл “CMakeLists.txt”
+Це файл, який каже, як збирати твій проект на різних системах (Windows, Linux, macOS).
+
+Він повинен лежати в корені твого репозиторію (там же, де main.cpp).
+
+Як створити:
+Відкрий папку проекту у Провіднику (де твій репозиторій).
+
+Створи новий текстовий файл і назви його так:
+CMakeLists.txt
+
+Скопіюй всередину ось це (працює для “Hello World” на C++):
+
+text
+cmake_minimum_required(VERSION 3.10)
+project(HelloWorld)
+set(CMAKE_CXX_STANDARD 11)
+add_executable(HelloWorld main.cpp)
