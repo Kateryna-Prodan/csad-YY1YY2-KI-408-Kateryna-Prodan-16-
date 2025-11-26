@@ -19,10 +19,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Build project
-        run: |
-          if [ "${{ runner.os }}" == "Windows" ]; then
-            ./ci.bat
-          else
-            bash ./ci.sh
-          fi
+
+      - name: Build & test on Windows
+        if: runner.os == 'Windows'
+        run: ci.bat
+
+      - name: Build & test on Linux/macOS
+        if: runner.os != 'Windows'
+        run: bash ci.sh
