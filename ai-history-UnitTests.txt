@@ -1,0 +1,74 @@
+створіть функцію int add(int a, int b);
+
+#ifndef MATH_OPERATIONS_H
+#define MATH_OPERATIONS_H
+
+// Function declaration
+int add(int a, int b);
+
+#endif // MATH_OPERATIONS_H
+
+
+create a unit_test.cpp file with Google.Test coverage of the math_operation.h functions.
+
+#include "math_operations.h"
+#include <gtest/gtest.h>
+
+// Test case for the add function
+TEST(AddFunctionTest, PositiveNumbers) {
+    EXPECT_EQ(add(3, 5), 8);
+}
+
+TEST(AddFunctionTest, NegativeNumbers) {
+    EXPECT_EQ(add(-3, -5), -8);
+}
+
+TEST(AddFunctionTest, MixedNumbers) {
+    EXPECT_EQ(add(-3, 5), 2);
+}
+
+TEST(AddFunctionTest, Zero) {
+    EXPECT_EQ(add(0, 0), 0);
+    EXPECT_EQ(add(0, 5), 5);
+    EXPECT_EQ(add(5, 0), 5);
+}
+
+// Main function for running all tests
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+
+Steps to Run the Tests
+1.	Install Google Test: Ensure Google Test is installed in your environment.
+2.	Compile the Code: Use a compiler like g++ to compile the math_operations.cpp and unit_test.cpp files, linking the Google Test library.
+
+   g++ -std=c++17 math_operations.cpp unit_test.cpp -lgtest -lgtest_main -pthread -o test_runner
+   3.	Run the Tests: Execute the compiled binary.
+./test_runner
+   I need to add the new unit_tests.cpp file and Google.Test to my CMakeLists.txt
+
+cmake_minimum_required(VERSION 3.10)
+project(HelloWorld)
+
+# Set the C++ standard
+set(CMAKE_CXX_STANDARD 11)
+
+# Add the main executable
+add_executable(HelloWorld main.cpp)
+
+# Enable testing
+enable_testing()
+
+# Add Google Test
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+# Add the unit test executable
+add_executable(UnitTests unit_test.cpp math_operations.cpp)
+
+# Link Google Test libraries to the unit test executable
+target_link_libraries(UnitTests ${GTEST_LIBRARIES} pthread)
+
+# Add a test target
+add_test(NAME RunUnitTests COMMAND UnitTests)
