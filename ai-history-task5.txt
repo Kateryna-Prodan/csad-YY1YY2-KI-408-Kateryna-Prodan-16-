@@ -1,0 +1,45 @@
+Який потрібно писати код в ci.yml? 
+
+Так, у файл ci.yml обовʼязково потрібно вставити спеціальний код — це інструкція для GitHub Actions, яка описує дії білду та тестування твого проекту!
+
+Ось робочий приклад для твого завдання
+text
+name: Cross-platform build
+
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'master'
+  pull_request:
+    branches:
+      - 'develop'
+      - 'master'
+
+jobs:
+  cross_build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build project
+        run: |
+          if [ "${{ runner.os }}" == "Windows" ]; then
+            ./ci.bat
+          else
+            bash ./ci.sh
+          fi
+Що робить цей код?
+Запускає workflow автоматично при push та pull request у develop/master.
+
+Проводить білд на трьох ОС: Windows, Linux, MacOS.
+
+Використовує твій скрипт ci.bat (Windows) або ci.sh (Linux/Mac).
+
+Автоматично перевіряє білд і тести, як ти робиш локально!
+
+Обовʼязково додай цей код у файл .github/workflows/ci.yml, і тільки тоді твій CI буде працювати!
+Після push цей workflow зʼявиться у вкладці Actions на GitHub, і ти побачиш статус білду.
