@@ -7,7 +7,7 @@ cd build
 cmake ..
 cmake --build .
 
-# Запуск тестів, тільки якщо є unit_tests
+# Замість голого `ctest`:
 if ctest -N | grep -q "unit_tests"; then
   ctest -R unit_tests --output-on-failure
 else
